@@ -12,9 +12,9 @@ function LogIn() {
   const [eduNumber, onChangeEduNumber] = useInput('')
   const [password, onChangePassword] = useInput('')
   const accessToken = localStorage.getItem('accessToken')
-  // if (logInDone) {
-  //   document.location.href = '/'
-  // }
+  if (logInDone) {
+    document.location.href = '/'
+  }
   if (!logInError && accessToken) {
     return <Redirect to="/workspace" />
   }
