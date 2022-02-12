@@ -52,14 +52,12 @@ const postReducer = (state = initialState, action: AnyAction): IPostState => {
         draft.loadPostsError = null
         break
       case LOAD_USER_POSTS_SUCCESS:
-      case LOAD_HASHTAG_POSTS_SUCCESS:
       case LOAD_POSTS_SUCCESS:
         draft.loadPostsLoading = false
         draft.loadPostsDone = true
         draft.mainPosts = draft.mainPosts.concat(action.data)
         break
       case LOAD_USER_POSTS_FAILURE:
-      case LOAD_HASHTAG_POSTS_FAILURE:
       case LOAD_POSTS_FAILURE:
         draft.loadPostsLoading = false
         draft.loadPostsError = action.error
