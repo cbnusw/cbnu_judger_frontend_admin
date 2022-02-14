@@ -29,6 +29,10 @@ export const LOAD_POSTS_REQUEST = 'LOAD_POSTS_REQUEST'
 export const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS'
 export const LOAD_POSTS_FAILURE = 'LOAD_POSTS_FAILURE'
 
+export const LOAD_USER_POSTS_REQUEST = 'LOAD_USER_POSTS_REQUEST'
+export const LOAD_USER_POSTS_SUCCESS = 'LOAD_USER_POSTS_SUCCESS'
+export const LOAD_USER_POSTS_FAILURE = 'LOAD_USER_POSTS_FAILURE'
+
 const postReducer = (state = initialState, action: AnyAction): IPostState => {
   return produce(state, (draft) => {
     switch (action.type) {
