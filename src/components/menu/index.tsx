@@ -7,10 +7,10 @@ function Menu() {
       <header>메뉴</header>
       <ListWrapper>
         <MenuList>
-          <span>과제 등록</span>
+          <span>내가 생성한 과제</span>
         </MenuList>
         <MenuList>
-          <span>과제 확인</span>
+          <span>과제 제출 확인</span>
         </MenuList>
         <MenuList>
           <span>로그아웃</span>

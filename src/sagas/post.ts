@@ -15,7 +15,7 @@ function* loadUserPosts(action) {
       type: LOAD_USER_POSTS_SUCCESS,
       data: result.data,
     })
-  } catch (err) {
+  } catch (err: any) {
     console.error(err)
     yield put({
       type: LOAD_USER_POSTS_FAILURE,
