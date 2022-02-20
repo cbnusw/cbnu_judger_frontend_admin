@@ -5,17 +5,15 @@ import useInput from '../../hooks/useInput'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../reducers'
 import { LOG_IN_REQUEST } from '../../reducers/user'
+import { useQuery } from 'react-query'
 
 function LogIn() {
   const dispatch = useDispatch()
-  const { logInLoading, logInDone, logInError } = useSelector((state: RootState) => state.user)
+  const { isLoading, isError } = useQuery('login')
   const [eduNumber, onChangeEduNumber] = useInput('')
   const [password, onChangePassword] = useInput('')
   const accessToken = localStorage.getItem('accessToken')
-  if (logInDone) {
-    document.location.href = '/'
-  }
-  if (!logInError && accessToken) {
+  if (!isError && accessToken) {
     return <Redirect to="/workspace" />
   }
   const onSubmit = useCallback(
@@ -60,7 +58,7 @@ function LogIn() {
               required
             />
           </div>
-          {logInError && <Error>이메일과 비밀번호 조합이 일치하지 않습니다.</Error>}
+          {isError && <Error>이메일과 비밀번호 조합이 일치하지 않습니다.</Error>}
         </Label>
         <Button type="submit">로그인</Button>
       </Form>
