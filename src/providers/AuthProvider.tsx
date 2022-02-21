@@ -1,16 +1,16 @@
 import axios, { AxiosRequestConfig } from 'axios'
 import React, { useRef, useState, useEffect, createContext } from 'react'
-import { useMutation } from 'react-query'
-import { loginRequest, refreshRequest } from '../apis/authApi'
+import { useMutation, UseMutationResult } from 'react-query'
+import { loginRequest, refreshRequest, TokenSet } from '../apis/authApi'
 import { configure } from 'axios-hooks'
 
 function AuthProvider(props: any) {
   const AuthContext = createContext(false)
   const accessTokenRef = useRef<string>()
-  const [tokenExpires, setTokenExpires] = useState<string>('')
+  const [tokenExpires, setTokenExpires] = useState<string | undefined>('')
 
   const logInQuery = useMutation(loginRequest, {
-    onSuccess: (data: any) => {
+    onSuccess: (data) => {
       accessTokenRef.current = data.accessToken
       setTokenExpires(data.tokenExpires)
     },

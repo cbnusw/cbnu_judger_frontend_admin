@@ -1,28 +1,33 @@
 import axios from 'axios'
-import { useMutation } from 'react-query'
+import { UseMutationResult } from 'react-query'
 import { authUrl } from '../config/config'
 
 axios.defaults.baseURL = authUrl
 
-export interface TokenSet {
+export type TokenSet = {
   accessToken?: string
   refreshToken?: string
-  tokenExpires: string
+  tokenExpires?: string
+}
+
+export interface ILogInInfo {
+  no: string
+  password: string
 }
 
 export function loadMyInfoAPI() {
   return axios.get('/user')
 }
 
-function logInAPI(no: string, password: string): any {
+function logInAPI({ no, password }: ILogInInfo): Promise<TokenSet> {
   return axios.post('/login', {
     no,
     password,
   })
 }
 
-export const loginRequest = async (no: string, password: string) => {
-  const { accessToken, refreshToken, tokenExpires }: TokenSet = await logInAPI(no, password)
+export const loginRequest = async ({ no, password }: ILogInInfo): Promise<any> => {
+  const { accessToken, refreshToken, tokenExpires } = await logInAPI({ no, password })
   return { accessToken, refreshToken, tokenExpires }
 }
 
