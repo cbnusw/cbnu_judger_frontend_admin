@@ -1,16 +1,18 @@
-import React from 'react'
-import { Switch, Route } from 'react-router-dom'
-import Enroll from '../../pages/Enroll'
+import React, { FC } from 'react'
+import { Switch, Route, Redirect } from 'react-router-dom'
+import Enroll from '../../../pages/Enroll'
 import Menu from '../../components/menu'
-function WorkSpace() {
+import useAuth from '../../hooks/useAuth'
+const WorkSpace: FC = ({ children }) => {
+  const { isAuthenticated }: any = useAuth()
+  if (!isAuthenticated) {
+    return <Redirect to="login" />
+  }
   return (
     <div>
       <Menu />
-      <Switch>
-        <Route path="/workspace/enroll" component={Enroll}></Route>
-        <Route path="/workspace/content"></Route>
-      </Switch>
-    </div>  
+      {children}
+    </div>
   )
 }
 export default WorkSpace

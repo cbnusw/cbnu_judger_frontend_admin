@@ -1,11 +1,12 @@
 import axios, { AxiosRequestConfig } from 'axios'
 import React, { useRef, useState, useEffect, createContext } from 'react'
-import { useMutation, UseMutationResult } from 'react-query'
-import { loginRequest, refreshRequest, TokenSet } from '../apis/authApi'
+import { useMutation } from 'react-query'
+import { loginRequest, refreshRequest } from '../apis/authApi'
 import { configure } from 'axios-hooks'
 
-function AuthProvider(props: any) {
-  const AuthContext = createContext(false)
+export const AuthContext = createContext(false)
+
+export function AuthProvider(props: any) {
   const accessTokenRef = useRef<string>()
   const [tokenExpires, setTokenExpires] = useState<string | undefined>('')
 
@@ -22,6 +23,7 @@ function AuthProvider(props: any) {
       setTokenExpires(data.tokenExpires)
     },
   })
+
   useEffect(() => {
     // add authorization token to each request
     axios.interceptors.request.use((config: AxiosRequestConfig): AxiosRequestConfig => {
@@ -45,5 +47,3 @@ function AuthProvider(props: any) {
   const isAuthenticated = isSuccess && !!accessTokenRef.current
   return <AuthContext.Provider value={...props}></AuthContext.Provider>
 }
-
-export default AuthProvider

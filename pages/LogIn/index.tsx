@@ -1,14 +1,13 @@
 import React, { useCallback, useEffect } from 'react'
 import { Header, Form, Label, Input, LinkContainer, Button, Error } from './styles'
 import { Redirect } from 'react-router-dom'
-import useInput from '../../hooks/useInput'
+import useInput from '../../src/hooks/useInput'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../reducers'
-import { LOG_IN_REQUEST } from '../../reducers/user'
+
 import { useQuery } from 'react-query'
+import { loginRequest } from '../../apis/authApi'
 
 function LogIn() {
-  const dispatch = useDispatch()
   const { isLoading, isError } = useQuery('login')
   const [eduNumber, onChangeEduNumber] = useInput('')
   const [password, onChangePassword] = useInput('')
@@ -19,14 +18,14 @@ function LogIn() {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault()
-      dispatch({
-        type: LOG_IN_REQUEST,
-        data: { no: eduNumber, password },
-      })
+      try {
+        loginRequest({ no: eduNumber, password })
+      } catch (err) {
+        console.log(err)
+      }
     },
     [eduNumber, password]
   )
-
   return (
     <div id="container">
       <Header>SW JUDGER 관리자 로그인</Header>
