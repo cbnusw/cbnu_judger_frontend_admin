@@ -2,26 +2,25 @@ import React, { useCallback, useEffect } from 'react'
 import { Header, Form, Label, Input, LinkContainer, Button, Error } from './styles'
 import { Redirect } from 'react-router-dom'
 import useInput from '../../src/hooks/useInput'
-import { useDispatch, useSelector } from 'react-redux'
-
-import { useQuery } from 'react-query'
 import { loginRequest } from '../../apis/authApi'
+import useAuth from '../../src/hooks/useAuth'
 
 function LogIn() {
-  const { isLoading, isError } = useQuery('login')
+  const { isSuccess, isAuthenticated }: any = useAuth()
   const [eduNumber, onChangeEduNumber] = useInput('')
   const [password, onChangePassword] = useInput('')
   const accessToken = localStorage.getItem('accessToken')
-  if (!isError && accessToken) {
+  if (!isSuccess && isAuthenticated) {
     return <Redirect to="/workspace" />
   }
   const onSubmit = useCallback(
-    (e) => {
+    async (e) => {
       e.preventDefault()
       try {
-        loginRequest({ no: eduNumber, password })
+        const { accessToken } = await loginRequest({ no: eduNumber, password })
+        localStorage.setItem('accessToken', accessToken)
       } catch (err) {
-        console.log(err)
+        alert('로그인에 실패하였습니다.')
       }
     },
     [eduNumber, password]

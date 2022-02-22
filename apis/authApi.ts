@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { UseMutationResult } from 'react-query'
 import { authUrl } from '../config/config'
 
 axios.defaults.baseURL = authUrl
@@ -38,4 +37,12 @@ export function refreshTokenApi(): any {
 export const refreshRequest = async () => {
   const { accessToken, refreshToken, tokenExpires }: TokenSet = await refreshTokenApi()
   return { accessToken, refreshToken, tokenExpires }
+}
+
+export function logOutApi() {
+  return axios.get('/logout')
+}
+
+export const getMyInfo = () => {
+  return axios.get('/me')
 }
