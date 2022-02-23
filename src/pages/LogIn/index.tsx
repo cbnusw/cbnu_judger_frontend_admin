@@ -3,10 +3,8 @@ import { Header, Form, Label, Input, LinkContainer, Button, Error } from './styl
 import { Redirect } from 'react-router-dom'
 import useInput from '../../hooks/useInput'
 import { getMyInfo, loginRequest } from '../../apis/authApi'
-import useAuth from '../../hooks/useAuth'
 import { useQuery } from 'react-query'
 import axios from 'axios'
-import { access } from 'fs'
 
 function LogIn() {
   // const { isSuccess, isAuthenticated }: any = useAuth()
@@ -30,6 +28,7 @@ function LogIn() {
       } catch (err) {
         alert('로그인에 실패하였습니다.')
       }
+      refetch()
     },
     [eduNumber, password]
   )

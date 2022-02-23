@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 import App from './layouts/App/App'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { AuthProvider } from './providers/AuthProvider'
-
+import { ReactQueryDevtools } from 'react-query/devtools'
 const queryClient = new QueryClient()
 
 ReactDOM.render(
@@ -12,6 +11,7 @@ ReactDOM.render(
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <App />
+        <ReactQueryDevtools initialIsOpen={true} />
       </QueryClientProvider>
     </BrowserRouter>
   </React.StrictMode>,
