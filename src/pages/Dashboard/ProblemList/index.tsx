@@ -1,10 +1,10 @@
 import React from 'react'
 
-function ProblemList({ problem }) {
+function ProblemList() {
   return (
     <div>
       <ul>
-        <li>{problem}</li>
+        <li>Hi</li>
       </ul>
     </div>
   )

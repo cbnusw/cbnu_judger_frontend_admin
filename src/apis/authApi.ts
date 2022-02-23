@@ -18,6 +18,7 @@ export function loadMyInfoAPI() {
   return axios.get('/user')
 }
 
+//관리자 권한만 로그인하려면 operator
 function logInAPI({ no, password }: ILogInInfo): Promise<TokenSet> {
   return axios.post('/login', {
     no,
@@ -26,8 +27,8 @@ function logInAPI({ no, password }: ILogInInfo): Promise<TokenSet> {
 }
 
 export const loginRequest = async ({ no, password }: ILogInInfo): Promise<any> => {
-  const { accessToken, refreshToken, tokenExpires } = await logInAPI({ no, password })
-  return { accessToken, refreshToken, tokenExpires }
+  const data = await logInAPI({ no, password })
+  return data
 }
 
 export function refreshTokenApi(): any {

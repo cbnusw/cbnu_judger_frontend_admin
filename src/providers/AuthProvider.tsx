@@ -45,5 +45,5 @@ export function AuthProvider(props: any) {
   }, [])
   const isSuccess = logInQuery.isSuccess || refreshQuery.isSuccess
   const isAuthenticated = isSuccess && !!accessTokenRef.current
-  return <AuthContext.Provider value={...props}></AuthContext.Provider>
+  return <AuthContext.Provider value={props}></AuthContext.Provider>
 }

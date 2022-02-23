@@ -5,13 +5,7 @@ function ProblemCard() {
   const { isLoading, isError, data } = useQuery('getProblems', (id: any) => {
     getProblems(id)
   })
-  return isLoading ? (
-    <div>Loading....</div>
-  ) : (
-    <div>
-      <ul>{data.data.problems.map((problem) => {})}</ul>
-    </div>
-  )
+  return isLoading ? <div>Loading....</div> : <div>{/* <ul>{data.data.problems.map((problem) => {})}</ul> */}</div>
 }
 
 export default ProblemCard

@@ -1,24 +1,32 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Header, Form, Label, Input, LinkContainer, Button, Error } from './styles'
 import { Redirect } from 'react-router-dom'
-import useInput from '../../src/hooks/useInput'
-import { loginRequest } from '../../apis/authApi'
-import useAuth from '../../src/hooks/useAuth'
+import useInput from '../../hooks/useInput'
+import { getMyInfo, loginRequest } from '../../apis/authApi'
+import useAuth from '../../hooks/useAuth'
+import { useQuery } from 'react-query'
+import axios from 'axios'
+import { access } from 'fs'
 
 function LogIn() {
-  const { isSuccess, isAuthenticated }: any = useAuth()
+  // const { isSuccess, isAuthenticated }: any = useAuth()
+  const { isError, isSuccess, data, refetch } = useQuery('getMyInfo', getMyInfo, {
+    enabled: false,
+  })
   const [eduNumber, onChangeEduNumber] = useInput('')
   const [password, onChangePassword] = useInput('')
-  const accessToken = localStorage.getItem('accessToken')
-  if (!isSuccess && isAuthenticated) {
+
+  if (isSuccess && data) {
     return <Redirect to="/workspace" />
   }
   const onSubmit = useCallback(
     async (e) => {
       e.preventDefault()
       try {
-        const { accessToken } = await loginRequest({ no: eduNumber, password })
-        localStorage.setItem('accessToken', accessToken)
+        const res = await loginRequest({ no: eduNumber, password })
+        axios.defaults.headers.common['x-access-token'] = res.data.data.accessToken
+        localStorage.setItem('accessToken', res.data.data.accessToken)
+        localStorage.setItem('refreshToken', res.data.data.refreshToken)
       } catch (err) {
         alert('로그인에 실패하였습니다.')
       }
