@@ -7,7 +7,6 @@ import { useQuery } from 'react-query'
 import axios from 'axios'
 
 function LogIn() {
-  // const { isSuccess, isAuthenticated }: any = useAuth()
   const { isError, isSuccess, data, refetch } = useQuery('getMyInfo', getMyInfo, {
     enabled: false,
   })
@@ -17,6 +16,7 @@ function LogIn() {
   if (isSuccess && data) {
     return <Redirect to="/workspace" />
   }
+
   const onSubmit = useCallback(
     async (e) => {
       e.preventDefault()
