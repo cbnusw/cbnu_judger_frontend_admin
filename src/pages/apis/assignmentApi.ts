@@ -2,6 +2,7 @@ import axios from 'axios'
 import { backUrl } from '../../config/config'
 
 axios.defaults.baseURL = backUrl
+
 export const getMyAssignments = () => axios.get('/assignment/me')
 
 export const getAssignmentDetails = (assignmentId: string) => axios.get(`/assignment/${assignmentId}`)

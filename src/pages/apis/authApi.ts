@@ -18,11 +18,8 @@ export function loadMyInfoAPI() {
   return axios.get('/user')
 }
 
-function logInAPI({ no, password }: ILogInInfo): Promise<TokenSet> {
-  return axios.post('/login', {
-    no,
-    password,
-  })
+export function logInAPI(data: { no: string; password: string }) {
+  return axios.post('/user/login', data).then((response) => response.data)
 }
 
 export const loginRequest = async ({ no, password }: ILogInInfo): Promise<any> => {

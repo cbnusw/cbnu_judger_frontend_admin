@@ -7,15 +7,9 @@ import { useQuery } from 'react-query'
 import axios from 'axios'
 
 function LogIn() {
-  const { isError, isSuccess, data, refetch } = useQuery('getMyInfo', getMyInfo, {
-    enabled: false,
-  })
+  const { isError, isSuccess, data } = useQuery('getMyInfo', getMyInfo)
   const [eduNumber, onChangeEduNumber] = useInput('')
   const [password, onChangePassword] = useInput('')
-
-  if (isSuccess && data) {
-    return <Redirect to="/workspace" />
-  }
 
   const onSubmit = useCallback(
     async (e) => {
@@ -28,10 +22,14 @@ function LogIn() {
       } catch (err) {
         alert('로그인에 실패하였습니다.')
       }
-      refetch()
     },
     [eduNumber, password]
   )
+
+  if (data) {
+    return <Redirect to="/workspace" />
+  }
+
   return (
     <div id="container">
       <Header>SW JUDGER 관리자 로그인</Header>
