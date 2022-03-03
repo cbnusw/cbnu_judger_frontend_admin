@@ -2,15 +2,17 @@ import React from 'react'
 import { useQuery } from 'react-query'
 import { getMyAssignments } from '../../../apis/assignmentApi'
 import Loading from '../../../components/Loading'
-
+import VirtualList from 'rc-virtual-list'
+import { List } from 'antd'
+import ListItem from '../../../components/ListItem'
 function MyAssignments() {
-  const { isLoading, data } = useQuery('getAssignments', getMyAssignments)
-  console.log(data)
+  const { isLoading, data } = useQuery('getAssignments', () => getMyAssignments())
+
   return isLoading ? (
     <Loading />
   ) : (
     <div>
-      <ul>{data ? data.data.map((item: any) => <li key={item._id}>{item.content}</li>) : 'No Data'}</ul>
+      <List>{(data: any) => <ListItem item={data} />}</List>
     </div>
   )
 }

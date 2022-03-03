@@ -4,12 +4,12 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './layouts/App/App'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
-const client = new QueryClient()
+const queryClient = new QueryClient()
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <QueryClientProvider client={client}>
+      <QueryClientProvider client={queryClient}>
         <App />
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
