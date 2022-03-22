@@ -1,15 +1,20 @@
-import { createStandaloneToast } from '@chakra-ui/react'
+import { notification } from 'antd'
 import { QueryClient } from 'react-query'
 
-const toast = createStandaloneToast()
+const toast = ({ title, description }) => {
+  notification.info({
+    message: title,
+    description: description,
+  })
+}
 
 function queryErrorHandler(error: unknown): void {
   // error is type unknown because in js, anything can be an error (e.g. throw(5))
-  const title = error instanceof Error ? error.message : 'error connecting to server'
+  const description = error instanceof Error ? error.message : 'error connecting to server'
 
   // prevent duplicate toasts
-  toast.closeAll()
-  toast({ title, status: 'error', variant: 'subtle', isClosable: true })
+
+  toast({ title: 'Error', description })
 }
 
 export function generateQueryClient(): QueryClient {

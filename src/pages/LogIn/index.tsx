@@ -5,26 +5,24 @@ import useInput from '../../hooks/useInput'
 import { getMyInfo, loginRequest } from '../../apis/authApi'
 import { useQuery } from 'react-query'
 import axios from 'axios'
+import { useUser } from 'hooks/useUser'
+import { authUrl } from 'config/config'
+import { useAuth } from 'auth/useAuth'
 
 function LogIn() {
   const { isError, isSuccess, data } = useQuery('getMyInfo', getMyInfo)
   const [eduNumber, onChangeEduNumber] = useInput('')
   const [password, onChangePassword] = useInput('')
+  const user = useUser()
+  const auth = useAuth()
 
-  const onSubmit = useCallback(
-    async (e) => {
-      e.preventDefault()
-      try {
-        const res = await loginRequest({ no: eduNumber, password })
-        axios.defaults.headers.common['x-access-token'] = res.data.data.accessToken
-        localStorage.setItem('accessToken', res.data.data.accessToken)
-        localStorage.setItem('refreshToken', res.data.data.refreshToken)
-      } catch (err) {
-        alert('로그인에 실패하였습니다.')
-      }
-    },
-    [eduNumber, password]
-  )
+  const onSubmit = useCallback(async () => {
+    try {
+      auth.signin(no, password)
+    } catch (err) {
+      alert('로그인에 실패하였습니다.')
+    }
+  }, [eduNumber, password])
 
   if (data) {
     return <Redirect to="/workspace" />
